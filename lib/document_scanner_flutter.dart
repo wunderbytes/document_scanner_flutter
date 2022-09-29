@@ -38,7 +38,7 @@ class DocumentScannerFlutter {
   /// `androidConfigs` : Android scanner labels configuration
   static Future<File?> launchForPdf(BuildContext context,
       {ScannerFileSource? source,
-      Map<dynamic, String> labelsConfig = const {}}) async {
+      Map<dynamic, String> labelsConfig = const {}, EdgeInsets? margin}) async {
     Future<File?>? launchWrapper() {
       return launch(context, labelsConfig: labelsConfig, source: source);
     }
@@ -46,7 +46,7 @@ class DocumentScannerFlutter {
     return await Navigator.push<File>(
         context,
         MaterialPageRoute(
-            builder: (_) => PdfGeneratotGallery(launchWrapper, labelsConfig)));
+            builder: (_) => PdfGeneratotGallery(launchWrapper, labelsConfig, margin: margin)));
   }
 
   /// Scanner to get single scanned image

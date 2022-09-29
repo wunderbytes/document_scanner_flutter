@@ -12,8 +12,9 @@ typedef Future<File?>? ScannerFilePicker();
 class PdfGeneratotGallery extends StatefulWidget {
   final ScannerFilePicker filePicker;
   final Map<dynamic, String> labelsConfig;
+  final EdgeInsets? margin;
 
-  const PdfGeneratotGallery(this.filePicker, this.labelsConfig);
+  const PdfGeneratotGallery(this.filePicker, this.labelsConfig, {this.margin});
 
   @override
   _PdfGeneratotGalleryState createState() => _PdfGeneratotGalleryState();
@@ -32,9 +33,12 @@ class _PdfGeneratotGalleryState extends State<PdfGeneratotGallery> {
   }
 
   onDone() async {
+    final margin = widget.margin;
     final pdf = pw.Document();
     for (var file in files) {
-      pdf.addPage(pw.Page(build: (pw.Context context) {
+      pdf.addPage(pw.Page(
+        margin: margin != null ? pw.EdgeInsets.fromLTRB(margin.left, margin.top, margin.right, margin.bottom) : null,
+        build: (pw.Context context) {
         return pw.Center(
           child: pw.Image(
             pw.MemoryImage(

@@ -5,6 +5,7 @@ import 'package:document_scanner_flutter/screens/pdf_generator_gallery.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_image_compress/flutter_image_compress.dart';
 
 import 'configs/configs.dart';
 
@@ -28,7 +29,10 @@ class DocumentScannerFlutter {
       if (Platform.isIOS) {
         path = path.split('file://')[1];
       }
-      return File(path);
+      final split = path.split('.');
+      split.removeLast();
+      final targetPath = split.join() + '_comperssed.jpg';
+      return FlutterImageCompress.compressAndGetFile(path, targetPath, quality: 95, minHeight: 1920, minWidth: 1920);
     }
   }
 
